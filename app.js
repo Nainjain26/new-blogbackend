@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Database connection
 mongoose
-  .connect(process.env.MONGODB_URI || "mongodb://localhost:27017/blog", {
+  .connect(process.env.MONGODB_URI || "mongodb://https://new-blogbackend.onrender.com", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
