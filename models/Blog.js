@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const blogSchema = new mongoose.Schema(
   {
     title: {
@@ -11,6 +10,10 @@ const blogSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    mainImage: {
+      type: String,
+      required: true,
+    },
     tags: [
       {
         type: String,
@@ -18,9 +21,9 @@ const blogSchema = new mongoose.Schema(
       },
     ],
     category: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
       required: true,
-      trim: true,
     },
     featured: {
       type: Boolean,
@@ -29,7 +32,7 @@ const blogSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: ["draft", "published"],
-      default: "published",
+      default: "draft",
     },
     sections: [
       {
@@ -46,7 +49,12 @@ const blogSchema = new mongoose.Schema(
           type: String,
           required: true,
         },
-        
+        section_list: [
+          {
+            type: String,
+            trim: true,
+          },
+        ],
         order: {
           type: Number,
           default: 0,
@@ -85,7 +93,6 @@ const blogSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
 // Generate slug before saving
 blogSchema.pre("save", function (next) {
   if (!this.isModified("title")) return next();
